@@ -8,13 +8,29 @@ namespace SurveyBasket.Api.Controllers
     [ApiController]
     public class PollsController : ControllerBase
     {
-        private readonly List<Poll> _polls = new List<Poll>();
+        private readonly List<Poll> _polls = [
+            new Poll
+            {
+                Id = 1,
+                Title = "Poll 1",
+                Description = "This is First Poll"
+            }
+        ];
 
-        [HttpGet]
+        [HttpGet("")]
         public IActionResult GetAll()
         {
             return Ok(_polls);
         }
+
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var poll = _polls.SingleOrDefault(p=> p.Id == id);
+
+            return poll is null ? NotFound() : Ok(poll);
+        }
+        
 
     }
 }
