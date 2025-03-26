@@ -25,5 +25,35 @@ namespace SurveyBasket.Api.Services
 
             return poll;
         }
+
+
+        public bool Update(int id, Poll poll)
+        {
+            var currentPoll = Get(id);
+
+            if (currentPoll is null)
+            {
+                return false;
+            }
+
+            currentPoll.Title = poll.Title;
+            currentPoll.Description = poll.Description;
+            
+            return true;
+        }
+
+        public bool Delete(int id)
+        {
+            var Poll = Get(id);
+
+            if (Poll is null)
+            {
+                return false;
+            }
+
+            _polls.Remove(Poll);
+
+            return true;
+        }
     }
 }
