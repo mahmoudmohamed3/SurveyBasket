@@ -1,32 +1,24 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SurveyBasket.Api.Models;
-
-namespace SurveyBasket.Api.Controllers
+﻿namespace SurveyBasket.Api.Controllers
 {
     [Route("api/[controller]")] // api/polls
     [ApiController]
-    public class PollsController : ControllerBase
+
+    public class PollsController (IPollService pollService): ControllerBase
     {
-        private readonly List<Poll> _polls = [
-            new Poll
-            {
-                Id = 1,
-                Title = "Poll 1",
-                Description = "This is First Poll"
-            }
-        ];
+        
+        private readonly IPollService _pollService = pollService;
+
 
         [HttpGet("")]
         public IActionResult GetAll()
         {
-            return Ok(_polls);
+            return Ok(_pollService.GetAll());
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var poll = _polls.SingleOrDefault(p=> p.Id == id);
+            var poll = _pollService.Get(id);
 
             return poll is null ? NotFound() : Ok(poll);
         }
