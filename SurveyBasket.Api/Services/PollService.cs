@@ -4,7 +4,7 @@ namespace SurveyBasket.Api.Services
 {
     public class PollService : IPollService
     {
-        private readonly List<Poll> _polls = [
+        private static readonly List<Poll> _polls = [
             new Poll
             {
                 Id = 1,
@@ -17,6 +17,13 @@ namespace SurveyBasket.Api.Services
 
         public Poll? Get(int id) => _polls.SingleOrDefault(p => p.Id == id);
 
-        
+        public Poll Add(Poll poll)
+        {
+            poll.Id = _polls.Count + 1;
+
+            _polls.Add(poll);
+
+            return poll;
+        }
     }
 }

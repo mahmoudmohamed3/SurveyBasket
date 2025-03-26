@@ -22,6 +22,14 @@
 
             return poll is null ? NotFound() : Ok(poll);
         }
+
+        [HttpPost ("")]
+        public IActionResult Add (Poll request)
+        {
+            var newPoll = _pollService.Add(request);
+
+            return CreatedAtAction(nameof(Get) , new { id = newPoll.Id } , newPoll);
+        }
         
 
     }
