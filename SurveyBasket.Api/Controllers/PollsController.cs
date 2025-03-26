@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SurveyBasket.Api.Models;
 
 namespace SurveyBasket.Api.Controllers
 {
@@ -7,6 +8,13 @@ namespace SurveyBasket.Api.Controllers
     [ApiController]
     public class PollsController : ControllerBase
     {
+        private readonly List<Poll> _polls = new List<Poll>();
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            return Ok(_polls);
+        }
 
     }
 }
