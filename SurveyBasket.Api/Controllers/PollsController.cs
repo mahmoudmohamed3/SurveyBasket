@@ -1,4 +1,6 @@
-﻿namespace SurveyBasket.Api.Controllers
+﻿using Mapster;
+
+namespace SurveyBasket.Api.Controllers
 {
     [Route("api/[controller]")] // api/polls
     [ApiController]
@@ -20,7 +22,19 @@
         {
             var poll = _pollService.Get(id);
 
-            return poll is null ? NotFound() : Ok(poll);
+            if (poll == null)
+            {
+                return NotFound();
+            }
+
+            var config = new TypeAdapterConfig();
+
+            config.NewConfig<Poll, PollResponse>()
+                .Map(dest => dest.Note, src => src.Description);
+
+            var response = poll.Adapt<PollResponse>(config);
+
+            return Ok(response);
         }
 
         [HttpPost ("")]
