@@ -15,8 +15,8 @@
             return Ok(_pollService.GetAll());
         }
 
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        [HttpGet("{id:int}")]
+        public IActionResult Get([FromRoute] int id)
         {
             var poll = _pollService.Get(id);
 
@@ -24,15 +24,15 @@
         }
 
         [HttpPost ("")]
-        public IActionResult Add (Poll request)
+        public IActionResult Add ( Poll request)
         {
             var newPoll = _pollService.Add(request);
 
             return CreatedAtAction(nameof(Get) , new { id = newPoll.Id } , newPoll);
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, Poll request)
+        [HttpPut("{id:int}")]
+        public IActionResult Update([FromRoute] int id, [FromBody] Poll request)
         {
             var isUpdated = _pollService.Update(id, request);
 
@@ -44,8 +44,8 @@
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [HttpDelete("{id:int}")]
+        public IActionResult Delete([FromRoute] int id)
         {
             var isDeleted = _pollService.Delete(id);
 
