@@ -1,14 +1,17 @@
 ﻿using Mapster;
+using MapsterMapper;
 
 namespace SurveyBasket.Api.Controllers
 {
     [Route("api/[controller]")] // api/polls
     [ApiController]
 
-    public class PollsController (IPollService pollService): ControllerBase
+    public class PollsController (IPollService pollService , IMapper mapper): ControllerBase
     {
         
         private readonly IPollService _pollService = pollService;
+        private readonly IMapper _mapper = mapper; 
+
 
 
         [HttpGet("")]
@@ -27,12 +30,14 @@ namespace SurveyBasket.Api.Controllers
                 return NotFound();
             }
 
-            var config = new TypeAdapterConfig();
+            //var config = new TypeAdapterConfig();
 
-            config.NewConfig<Poll, PollResponse>()
-                .Map(dest => dest.Note, src => src.Description);
+            //config.NewConfig<Poll, PollResponse>()
+            //    .Map(dest => dest.Note, src => src.Description);
 
-            var response = poll.Adapt<PollResponse>(config);
+            //var response = poll.Adapt<PollResponse>(config);
+
+            var response = _mapper.Map<PollResponse>(poll);
 
             return Ok(response);
         }
