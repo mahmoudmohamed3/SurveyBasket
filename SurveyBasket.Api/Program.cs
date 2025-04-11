@@ -1,4 +1,6 @@
 using Mapster;
+using MapsterMapper;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,10 +12,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-//using Mapster 
-builder.Services.AddMapster();
+// using Mapster
+var mappingConfig = TypeAdapterConfig.GlobalSettings;
+mappingConfig.Scan(Assembly.GetExecutingAssembly());
 
+builder.Services.AddSingleton<IMapper>(new Mapper(mappingConfig));
 
+// Deprndency Injection
 builder.Services.AddScoped<IPollService, PollService>();
 
 var app = builder.Build();
