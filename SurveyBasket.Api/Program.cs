@@ -1,6 +1,8 @@
 using Mapster;
 using MapsterMapper;
+using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 using System.Reflection;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,10 @@ builder.Services.AddSingleton<IMapper>(new Mapper(mappingConfig));
 
 // Deprndency Injection
 builder.Services.AddScoped<IPollService, PollService>();
+
+// Fluent Validation Package
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly())
+    .AddFluentValidationAutoValidation();
 
 var app = builder.Build();
 

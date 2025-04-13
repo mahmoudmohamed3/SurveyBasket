@@ -38,9 +38,9 @@ namespace SurveyBasket.Api.Controllers
         }
 
         [HttpPost ("")]
-        public IActionResult Add ( Poll request)
+        public IActionResult Add ([FromBody] CreatePollRequest request)
         {
-            var newPoll = _pollService.Add(request);
+            var newPoll = _pollService.Add(request.Adapt<Poll>());
 
             return CreatedAtAction(nameof(Get) , new { id = newPoll.Id } , newPoll);
         }
