@@ -1,4 +1,4 @@
-﻿using SurveyBasket.Api.Models;
+﻿using SurveyBasket.Api.Entities;
 
 namespace SurveyBasket.Api.Services
 {
@@ -9,7 +9,7 @@ namespace SurveyBasket.Api.Services
             {
                 Id = 1,
                 Title = "Poll 1",
-                Description = "This is First Poll"
+                Summary = "This is First Poll"
             }
         ];
 
@@ -37,7 +37,7 @@ namespace SurveyBasket.Api.Services
             }
 
             currentPoll.Title = poll.Title;
-            currentPoll.Description = poll.Description;
+            currentPoll.Summary = poll.Summary;
             
             return true;
         }

@@ -1,4 +1,4 @@
-﻿using SurveyBasket.Api.Models;
+﻿using SurveyBasket.Api.Entities;
 
 namespace SurveyBasket.Api.Services
 {

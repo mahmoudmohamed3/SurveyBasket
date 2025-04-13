@@ -8,7 +8,7 @@ namespace SurveyBasket.Api.Mapping
         {
 
             config.NewConfig<Poll, PollResponse>()
-                .Map(dest => dest.Note, src => src.Description);
+                .Map(dest => dest.Note, src => src.Summary);
 
         }
     }

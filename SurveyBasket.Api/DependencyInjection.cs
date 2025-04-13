@@ -1,15 +1,23 @@
 ﻿using Mapster;
 using MapsterMapper;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
+using SurveyBasket.Api.Persistence;
+using System.Data;
 using System.Reflection;
 
 namespace SurveyBasket;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddDependencies(this IServiceCollection services)
+    public static IServiceCollection AddDependencies(this IServiceCollection services , IConfiguration configuration)
     {
         services.AddControllers();
+
+        var connectionString = configuration.GetConnectionString("DefaultConnection") ??
+            throw new InvalidOperationException("Connection String Not Found");
+
+        services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer("connectionString"));
+
 
         services
             .AddSwaggerServices()
