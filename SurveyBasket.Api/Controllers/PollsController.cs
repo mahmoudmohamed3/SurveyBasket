@@ -14,62 +14,63 @@ namespace SurveyBasket.Api.Controllers
 
 
         [HttpGet("")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            return Ok(_pollService.GetAll());
+            var polls = await _pollService.GetAllAsync();
+
+            var response = polls.Adapt<IEnumerable<PollResponse>>();
+
+            return Ok(response);
         }
 
         [HttpGet("{id:int}")]
-        public IActionResult Get([FromRoute] int id)
+        public async Task<IActionResult> Get([FromRoute] int id)
         {
-            var poll = _pollService.Get(id);
+            var poll = await _pollService.GetAsync(id);
 
             if (poll == null)
             {
                 return NotFound();
             }
 
-            
-
             var response = poll.Adapt<PollResponse>();
-
 
             return Ok(response);
         }
 
-        [HttpPost ("")]
-        public IActionResult Add ([FromBody] CreatePollRequest request)
+        [HttpPost("")]
+        public async Task<IActionResult> Add([FromBody] CreatePollRequest request)
         {
-            var newPoll = _pollService.Add(request.Adapt<Poll>());
+            var newPoll = await _pollService.AddAsync(request.Adapt<Poll>());
 
-            return CreatedAtAction(nameof(Get) , new { id = newPoll.Id } , newPoll);
+            return CreatedAtAction(nameof(Get), new { id = newPoll.Id }, newPoll);
         }
 
-        [HttpPut("{id:int}")]
-        public IActionResult Update([FromRoute] int id, [FromBody] Poll request)
-        {
-            var isUpdated = _pollService.Update(id, request);
+        //[HttpPut("{id:int}")]
+        //public IActionResult Update([FromRoute] int id, [FromBody] Poll request)
+        //{
+        //    var isUpdated = _pollService.Update(id, request);
 
-            if (!isUpdated)
-            {
-                return NotFound();
-            }
+        //    if (!isUpdated)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        [HttpDelete("{id:int}")]
-        public IActionResult Delete([FromRoute] int id)
-        {
-            var isDeleted = _pollService.Delete(id);
+        //[HttpDelete("{id:int}")]
+        //public IActionResult Delete([FromRoute] int id)
+        //{
+        //    var isDeleted = _pollService.Delete(id);
 
-            if (!isDeleted)
-            {
-                return NotFound();
-            }
+        //    if (!isDeleted)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
     }
 }

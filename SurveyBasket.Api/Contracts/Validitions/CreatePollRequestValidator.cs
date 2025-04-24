@@ -10,9 +10,9 @@
                 .Length(3, 100)
                 .WithMessage("Title Should be at least {MinLength} and maximum {MaxLength}, you entered [{TotalLength}]");
 
-            RuleFor(x => x.Description)
+            RuleFor(x => x.Summary)
                 .NotEmpty()
-                .Length(3, 1000);
+                .Length(3, 1500);
         }
     }
 }
