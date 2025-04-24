@@ -6,3 +6,7 @@ global using SurveyBasket.Api.Contracts.Requests;
 global using SurveyBasket.Api.Contracts.Responses;
 global using FluentValidation;
 global using Microsoft.EntityFrameworkCore;
+global using SurveyBasket.Api.Persistence;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using System.Reflection;
+
