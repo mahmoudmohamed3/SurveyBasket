@@ -24,33 +24,38 @@ namespace SurveyBasket.Api.Services
         }
 
 
-        //public bool Update(int id, Poll poll)
-        //{
-        //    var currentPoll = Get(id);
+        public async Task<bool> UpdateAsync(int id, Poll poll, CancellationToken cancellationToken = default)
+        {
+            var currentPoll = await GetAsync(id , cancellationToken);
 
-        //    if (currentPoll is null)
-        //    {
-        //        return false;
-        //    }
+            if (currentPoll is null)
+            {
+                return false;
+            }
 
-        //    currentPoll.Title = poll.Title;
-        //    currentPoll.Summary = poll.Summary;
+            currentPoll.Title = poll.Title;
+            currentPoll.Summary = poll.Summary;
+            currentPoll.StartsAt = poll.StartsAt;
+            currentPoll.EndsAt = poll.EndsAt;
 
-        //    return true;
-        //}
+            await _context.SaveChangesAsync(cancellationToken);
 
-        //public bool Delete(int id)
-        //{
-        //    var Poll = Get(id);
+            return true;
+        }
 
-        //    if (Poll is null)
-        //    {
-        //        return false;
-        //    }
+        public async Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var Poll = await GetAsync(id , cancellationToken);
 
-        //    _polls.Remove(Poll);
+            if (Poll is null)
+            {
+                return false;
+            }
 
-        //    return true;
-        //}
+            _context.Polls.Remove(Poll);
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return true;
+        }
     }
 }

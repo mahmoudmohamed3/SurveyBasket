@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using MapsterMapper;
+using System.Threading;
 
 namespace SurveyBasket.Api.Controllers
 {
@@ -39,38 +40,38 @@ namespace SurveyBasket.Api.Controllers
         }
 
         [HttpPost("")]
-        public async Task<IActionResult> Add([FromBody] CreatePollRequest request , CancellationToken cancellationToken)
+        public async Task<IActionResult> Add([FromBody] PollRequest request , CancellationToken cancellationToken)
         {
             var newPoll = await _pollService.AddAsync(request.Adapt<Poll>() , cancellationToken);
 
             return CreatedAtAction(nameof(Get), new { id = newPoll.Id }, newPoll);
         }
 
-        //[HttpPut("{id:int}")]
-        //public IActionResult Update([FromRoute] int id, [FromBody] Poll request)
-        //{
-        //    var isUpdated = _pollService.Update(id, request);
+        [HttpPut("{id:int}")]
+        public async Task <IActionResult> Update([FromRoute] int id, [FromBody] PollRequest request , CancellationToken cancellationToken)
+        {
+            var isUpdated = await _pollService.UpdateAsync(id, request.Adapt<Poll>(), cancellationToken);
 
-        //    if (!isUpdated)
-        //    {
-        //        return NotFound();
-        //    }
+            if (!isUpdated)
+            {
+                return NotFound();
+            } 
 
-        //    return NoContent();
-        //}
+            return NoContent();
+        }
 
-        //[HttpDelete("{id:int}")]
-        //public IActionResult Delete([FromRoute] int id)
-        //{
-        //    var isDeleted = _pollService.Delete(id);
+        [HttpDelete("{id:int}")]
+        public async Task <IActionResult> Delete([FromRoute] int id , CancellationToken cancellationToken)
+        {
+            var isDeleted = await _pollService.DeleteAsync(id , cancellationToken);
 
-        //    if (!isDeleted)
-        //    {
-        //        return NotFound();
-        //    }
+            if (!isDeleted)
+            {
+                return NotFound();
+            }
 
-        //    return NoContent();
-        //}
+            return NoContent();
+        }
 
     }
 }
