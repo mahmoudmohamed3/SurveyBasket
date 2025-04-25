@@ -1,4 +1,4 @@
-﻿namespace SurveyBasket.Api.Contracts.Requests
+﻿namespace SurveyBasket.Api.Contracts.Poll
 {
 
     public record PollRequest(
@@ -8,5 +8,5 @@
         DateOnly StartsAt,
         DateOnly EndsAt
         );
-    
+
 }

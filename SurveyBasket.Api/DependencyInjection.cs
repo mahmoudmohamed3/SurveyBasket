@@ -21,6 +21,7 @@ public static class DependencyInjection
             .AddFluentValidationConf();
 
         services.AddScoped<IPollService, PollService>();
+        services.AddScoped<IAuthService, AuthService>();
 
         return services;
     }
