@@ -21,7 +21,7 @@ namespace SurveyBasket.Api.Services
             // Generate JWT Token
 
             // Return New AuthResponse 
-            return new AuthResponse (Guid.NewGuid().ToString(), "test@test.com", "Mahmoud", "Abdlesamea", "hlhlhlhl", 1600 );
+            return new AuthResponse (user.Id, user.Email, user.FirstName, user.LastName, "hlhlhlhl", 1600 );
         }
     }
 }

@@ -8,6 +8,7 @@ public static class DependencyInjection
     public static IServiceCollection AddDependencies(this IServiceCollection services , IConfiguration configuration)
     {
         services.AddControllers();
+        services.AddAuthConfig();
 
         var connectionString = configuration.GetConnectionString("DefaultConnection") ??
             throw new InvalidOperationException("Connection String Not Found");
@@ -17,8 +18,8 @@ public static class DependencyInjection
 
         services
             .AddSwaggerServices()
-            .AddMapsterConf()
-            .AddFluentValidationConf();
+            .AddMapsterConfig()
+            .AddFluentValidationConfig();
 
         services.AddScoped<IPollService, PollService>();
         services.AddScoped<IAuthService, AuthService>();
@@ -26,7 +27,7 @@ public static class DependencyInjection
         return services;
     }
 
-    public static IServiceCollection AddSwaggerServices(this IServiceCollection services)
+    private static IServiceCollection AddSwaggerServices(this IServiceCollection services)
     {
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
@@ -35,7 +36,7 @@ public static class DependencyInjection
         return services;
     }
 
-    public static IServiceCollection AddMapsterConf(this IServiceCollection services)
+    private static IServiceCollection AddMapsterConfig(this IServiceCollection services)
     {
         var mappingConfig = TypeAdapterConfig.GlobalSettings;
         mappingConfig.Scan(Assembly.GetExecutingAssembly());
@@ -45,11 +46,19 @@ public static class DependencyInjection
         return services;
     }
 
-    public static IServiceCollection AddFluentValidationConf(this IServiceCollection services)
+    private static IServiceCollection AddFluentValidationConfig(this IServiceCollection services)
     {
         services
             .AddFluentValidationAutoValidation()
             .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+        return services;
+    }
+
+    private static IServiceCollection AddAuthConfig(this IServiceCollection services)
+    {
+        services.AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<ApplicationDbContext>();
 
         return services;
     }
