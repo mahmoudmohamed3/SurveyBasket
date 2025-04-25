@@ -74,7 +74,7 @@ namespace SurveyBasket.Api.Controllers
         }
 
         [HttpPut("{id:int}/togglePublish")]
-        public async Task<IActionResult> TogglePublish([FromRoute] int id, [FromBody] PollRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> TogglePublish([FromRoute] int id, CancellationToken cancellationToken)
         {
             var isUpdated = await _pollService.TogglePublishStatusAsync(id, cancellationToken);
 
