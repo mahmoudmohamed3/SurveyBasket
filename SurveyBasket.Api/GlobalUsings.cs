@@ -9,4 +9,7 @@ global using Microsoft.EntityFrameworkCore;
 global using SurveyBasket.Api.Persistence;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using System.Reflection;
+global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+global using Microsoft.AspNetCore.Identity;
+
 
