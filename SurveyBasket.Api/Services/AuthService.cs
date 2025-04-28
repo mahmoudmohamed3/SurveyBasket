@@ -1,10 +1,12 @@
 ﻿using Mapster;
+using SurveyBasket.Api.Authentication;
 
 namespace SurveyBasket.Api.Services
 {
-    public class AuthService(UserManager<ApplicationUser> userManager) : IAuthService
+    public class AuthService(UserManager<ApplicationUser> userManager , IJwtProvider jwtProvider) : IAuthService
     {
         private readonly UserManager<ApplicationUser> _userManager = userManager;
+        private readonly IJwtProvider _jwtProvider = jwtProvider;
 
         public async Task<AuthResponse?> GetTokenAsync(string Email, string Password, CancellationToken cancellationToken = default)
         {
@@ -18,10 +20,10 @@ namespace SurveyBasket.Api.Services
             if (!isValidPassword)
                 return null;
 
-            // Generate JWT Token
+            var (token , expiresIn) = _jwtProvider.GenerateToken(user);
 
             // Return New AuthResponse 
-            return new AuthResponse (user.Id, user.Email, user.FirstName, user.LastName, "hlhlhlhl", 1600 );
+            return new AuthResponse (user.Id, user.Email, user.FirstName, user.LastName, token, expiresIn);
         }
     }
 }

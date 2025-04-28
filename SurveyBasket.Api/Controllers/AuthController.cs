@@ -1,4 +1,6 @@
-﻿namespace SurveyBasket.Api.Controllers
+﻿using Microsoft.AspNetCore.Authorization;
+
+namespace SurveyBasket.Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
@@ -6,6 +8,7 @@
     {
         private readonly IAuthService _authService = authService;
 
+        [Authorize]
         [HttpPost ("")]
         public async Task<IActionResult> LoginAsync (LoginRequest request , CancellationToken cancellationToken)
         {
