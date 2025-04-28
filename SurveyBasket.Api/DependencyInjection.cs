@@ -1,6 +1,7 @@
 ﻿using Mapster;
 using MapsterMapper;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
+using SurveyBasket.Api.Authentication;
 namespace SurveyBasket;
 
 public static class DependencyInjection
@@ -57,6 +58,8 @@ public static class DependencyInjection
 
     private static IServiceCollection AddAuthConfig(this IServiceCollection services)
     {
+        services.AddSingleton<IJwtProvider, JwtProvider>();
+
         services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
