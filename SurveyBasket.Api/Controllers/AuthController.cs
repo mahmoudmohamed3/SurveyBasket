@@ -9,7 +9,6 @@ namespace SurveyBasket.Api.Controllers
     public class AuthController (IAuthService authService , IOptions<JwtOptions> jwtOptions): ControllerBase
     {
         private readonly IAuthService _authService = authService;
-        private readonly JwtOptions _jwtOptions = jwtOptions.Value;
 
 
         [Authorize]
@@ -21,10 +20,5 @@ namespace SurveyBasket.Api.Controllers
             return authResult is null ? BadRequest("Invalid Email/Password") : Ok(authResult);
         }
 
-        [HttpGet("Test")]
-        public IActionResult Test()
-        {
-            return Ok(_jwtOptions.Audience);
-        }
     }
 }
