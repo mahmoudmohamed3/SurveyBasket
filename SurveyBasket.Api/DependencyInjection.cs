@@ -63,6 +63,8 @@ public static class DependencyInjection
     {
         services.AddSingleton<IJwtProvider, JwtProvider>();
 
+        services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.SectionName));
+
         services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
