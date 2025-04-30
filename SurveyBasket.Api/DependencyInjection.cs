@@ -12,7 +12,7 @@ public static class DependencyInjection
     public static IServiceCollection AddDependencies(this IServiceCollection services , IConfiguration configuration)
     {
         services.AddControllers();
-        services.AddAuthConfig();
+        services.AddAuthConfig(configuration);
 
         var connectionString = configuration.GetConnectionString("DefaultConnection") ??
             throw new InvalidOperationException("Connection String Not Found");
@@ -59,7 +59,7 @@ public static class DependencyInjection
         return services;
     }
 
-    private static IServiceCollection AddAuthConfig(this IServiceCollection services)
+    private static IServiceCollection AddAuthConfig(this IServiceCollection services , IConfiguration configuration)
     {
         services.AddSingleton<IJwtProvider, JwtProvider>();
 
@@ -80,13 +80,14 @@ public static class DependencyInjection
                 ValidateIssuer = true,
                 ValidateAudience = true,
                 ValidateLifetime = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("J7MfAb4WcAIMkkigVtIepIILOVJEjAcB")),
-                ValidIssuer = "SurveyBasketApp",
-                ValidAudience = "SurveyBasketApp users"
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]!)),
+                ValidIssuer = configuration["Jwt:Issuer"],
+                ValidAudience = configuration["Jwt:Audience"]
             };
+
         });
 
-
+        
         return services;
     }
 }

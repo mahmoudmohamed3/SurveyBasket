@@ -1,12 +1,8 @@
-using Mapster;
-using MapsterMapper;
-using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
-using SurveyBasket;
-using System.Reflection;
-
-
 var builder = WebApplication.CreateBuilder(args);
 
+
+//builder.Services.AddIdentityApiEndpoints<ApplicationUser>()
+//    .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddDependencies(builder.Configuration);
 
@@ -23,6 +19,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+//app.MapIdentityApi<ApplicationUser>();
 
 app.MapControllers();
 

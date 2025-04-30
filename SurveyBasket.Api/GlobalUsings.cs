@@ -1,4 +1,5 @@
-﻿global using SurveyBasket.Api.Services;
+﻿global using SurveyBasket;
+global using SurveyBasket.Api.Services;
 global using Microsoft.AspNetCore.Http;
 global using Microsoft.AspNetCore.Mvc;
 global using SurveyBasket.Api.Entities;

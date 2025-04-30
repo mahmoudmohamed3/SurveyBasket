@@ -22,7 +22,7 @@ namespace SurveyBasket.Api.Authentication
 
             var singingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
 
-            
+
             var expiresIn = 30;
 
             var token = new JwtSecurityToken(
